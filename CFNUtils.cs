@@ -1,340 +1,490 @@
-Skip to sidebar navigation
-Skip to content
-Linked Applications
-Your work
-Projects
-Repositories
-People
-Search for code, commits or repositories
-Search for code, commits or repositories...
-Help
-Inbox
-Logged in as PANTALACCI Thomas (EXT) (pantalaccith)
-BW8 - Source Code Repository
-Clone
-Create branch
-Create pull request
-Create fork
-Compare
-Reports
+using System;
+using System.Collections.Generic;
+using System.Text.RegularExpressions;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using System.DirectoryServices.AccountManagement;
+using System.Diagnostics;
+using System.Configuration;
+using System.Collections.Specialized;
+using System.Net;
+using System.IO;
+using CyberArk.AIM.NetPasswordSDK;
+using CyberArk.AIM.NetPasswordSDK.Exceptions;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using System.DirectoryServices.Protocols;
 
 
-Source
-Commits
-Graphs
-Branches
-All Branches Graph
-Pull requests
-Forks
-NEWBuilds
-Repository settings
+namespace CfnUtils
+{
+    public static class CFNUtils
+    {
 
-BW8 - Source Code Repository
-CFN - ManageVault v3
-Manage Vault v3
-Source
-Branchmaster
-Branch actions
-CFN - ManageVault v3/CFNUtils.cs
-ruhlmannol_adm
-ruhlmannol_adm
- authored 
-5f904504a3a
-01 Sep 2022
-Edit
-Blame
-Raw file
-Source view
-Diff to previous
-History
-20.13 KBContributors
-108
-                client.Dispose();
-109
-            }
-110
-​
-111
-            logger.Debug(String.Format("Obtained session token: {0}", session_token));
-112
-            return session_token;
-113
+
+
+        public static log4net.ILog logger;
+
+        public static string server_address;
+
+        public static string vault_user;
+
+        public static bool use_v10;
+
+        public static string g_full_admin;
+
+        public static string vault_user_object_name;
+
+        public static string app_id;
+
+        public static string password_manager;
+
+        public static string vault_user_safe_name;
+
+        public static string env;
+
+        public static bool useSSL;
+
+        static CFNUtils() {
+            logger = log4net.LogManager.GetLogger("CFNUtils");
+
+            server_address = ConfigurationManager.AppSettings["VaultServer"];
+            vault_user = ConfigurationManager.AppSettings["VaultUser"];
+            use_v10 = String.IsNullOrEmpty(ConfigurationManager.AppSettings["UseV10"]) ? false : ConfigurationManager.AppSettings["UseV10"].Equals("Y");
+            g_full_admin = ConfigurationManager.AppSettings["GFullAdmin"];
+            vault_user_object_name = ConfigurationManager.AppSettings["VaultUserObjectName"];
+            app_id = ConfigurationManager.AppSettings["AppID"];
+            //password_manager = String.IsNullOrEmpty(ConfigurationManager.AppSettings["PasswordManager"]) ? "CPM-MARS-1" : ConfigurationManager.AppSettings["PasswordManager"];
+            password_manager = String.IsNullOrEmpty(ConfigurationManager.AppSettings["PasswordManager"]) ? "PasswordManager" : ConfigurationManager.AppSettings["PasswordManager"];
+            vault_user_safe_name = String.IsNullOrEmpty(ConfigurationManager.AppSettings["VaultUserSafeName"]) ? "CF-AIM-W61" : ConfigurationManager.AppSettings["VaultUserSafeName"];
+            env =  String.IsNullOrEmpty(ConfigurationManager.AppSettings["Env"]) ? "PRD" : ConfigurationManager.AppSettings["Env"];
+            useSSL = String.IsNullOrEmpty(ConfigurationManager.AppSettings["UseSSL"]) ? false : ConfigurationManager.AppSettings["UseSSL"].Equals("Y");
+
+            System.Net.ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
         }
-114
-​
-115
-        public static int LogoffVault(string session_token) 
-116
+
+
+        public static string LogonVault(string username, string password)
         {
-117
-            //int rc = 0;
-118
-            logger.Info("Logoff vault ...");
-119
-            ServerResponse serverResponse = SendHttpRequest(session_token, "POST", "/PasswordVault/WebServices/auth/Cyberark/CyberArkAuthenticationService.svc/Logoff", "");
-120
-            if (IsFailure(serverResponse)) {
-121
-                //rc = 1;
-122
-                return 1;
-123
-            }
-124
-            else {
-125
-                return 0;
-126
-            }
-127
-​
-128
-            //return rc;
-129
-        }
-130
-​
-131
-        public static ServerResponse SendHttpRequest(string session_token, string method, string endpoint, string payload)
-132
-        {
-133
+            string session_token = null;
             WebClient client = new WebClient();
-134
             client.Headers[HttpRequestHeader.ContentType] = "application/json";
-135
-            client.Headers[HttpRequestHeader.Authorization] = session_token;
-136
-​
-137
-            //logger.Info(String.Format("server_address: {0}\tendpoint: {1}", server_address + endpoint));
-138
-​
-139
-            //Debug
-140
-            /*
-141
-            if (payload.Contains("G_CF-AIM-XXX-APP_HP_XXX_Gst")) {
-142
-                logger.Debug("On entre dans la fonction de CFNUtils...");
-143
-            }
-144
-            */
-145
-​
-146
-            Uri uri = new Uri(String.Format("https://{0}{1}", server_address, endpoint));
-147
-            string response = "";
-148
-            WebExceptionStatus status_code = WebExceptionStatus.Success;
-149
-            CyberarkError error = null;
-150
+            logger.Info("Logon vault...");
             try {
-151
-                if (method.ToUpper().Equals("GET")) {
-152
-                    response = client.DownloadString(uri);
-153
+                //https://docs.cyberark.com/Product-Doc/OnlineHelp/PAS/Latest/en/Content/SDK/CyberArk%20Authentication%20-%20Logon_v10.htm
+                string logon_endpoint = ConfigurationManager.AppSettings["UseV10"].Equals("Y") ? "/PasswordVault/API/auth/Cyberark/Logon" : "/PasswordVault/WebServices/auth/Cyberark/CyberArkAuthenticationService.svc/Logon";
+                Uri uri = new Uri("https://" + server_address + logon_endpoint);
+
+                //string payload = "{\"username\": \"" + username + "\", \"password\": \"" + password + "\" }";
+                JObject payload = new JObject(new JProperty("username", username), new JProperty("password", password));
+
+                //logger.Debug(String.Format("uri: {0}\tpayload: {1}", uri.ToString(), payload.ToString()));
+
+                //var response = client.UploadString(uri, payload);
+                var response = client.UploadString(uri, payload.ToString());
+                if (use_v10) {
+                    session_token = response.Replace("\"", "");
                 }
-154
                 else {
-155
-                    response = client.UploadString(uri, method, payload);
-156
+                    dynamic json = JsonConvert.DeserializeObject(response);
+                    session_token = json.CyberArkLogonResult;
                 }
-157
-            }
-158
-            catch (WebException ex) {
-159
-                response = GetServerErrorMessages(ex);
-160
-​
-161
-                //Debug
-162
-                /*
-163
-                if (payload.Contains("G_CF-AIM-XXX-APP_HP_XXX_Gst")) {
-164
-                    logger.Debug(String.Format("Custom debug - response: {0}", response));
-165
+
+                //Analyser la réponse pour identifier si c'est vraiment un token...
+                //logger.Debug(String.Format("session_token: {0}\nresponse: {1}", session_token, response));
+                Regex regex = new Regex(@"^[a-zA-Z0-9]+$");
+                if (!regex.IsMatch(session_token)) {
+                    logger.Error(String.Format("Returned value is not a valid token: {0}", session_token));
+                    return null;
                 }
-166
-                */
-167
-​
-168
-                if (!String.IsNullOrEmpty(response)) {
-169
-                    try {
-170
-                        error = JsonConvert.DeserializeObject<CyberarkError>(response);
-171
-                    }
-172
-                    catch (JsonSerializationException e) {
-173
-                        logger.Debug("Failed to parse Cyberark Error response: " + e.Message);
-174
-                    }
-175
-                }
-176
-                status_code = ex.Status;
-177
             }
-178
-            catch (Exception e) {
-179
-                logger.Error("Unexpected error: " + e.Message);
-180
-                status_code = WebExceptionStatus.UnknownError;
-181
+            catch (Exception ex) {
+                logger.Error(String.Format("Unable to get session token: {0}", ex.ToString()));
+                return null;
             }
-182
             finally {
-183
                 client.Dispose();
-184
             }
-185
-​
-186
-            logger.Debug("Response: " + response + System.Environment.NewLine + "StatusCode: " + status_code.ToString());
-187
-            return new ServerResponse(response, error, status_code);
-188
+
+            logger.Debug(String.Format("Obtained session token: {0}", session_token));
+            return session_token;
         }
-189
-​
-190
-        private static string GetServerErrorMessages(WebException ex)
-191
+
+        public static int LogoffVault(string session_token) 
         {
-192
-            String serverResponse = "";
-193
-            logger.Error(ex.Message.ToString());
-194
-            if (ex.Response != null)
-195
-            {
-196
-                try
-197
-                {
-198
-                    StreamReader reader = new StreamReader(ex.Response.GetResponseStream());
-199
-                    serverResponse += reader.ReadToEnd();
-200
-                }
-201
-                catch (Exception e)
-202
-                {
-203
-                    logger.Debug("Failed to read server response stream: " + e.Message);
-204
-                }
-205
+            //int rc = 0;
+            logger.Info("Logoff vault ...");
+            ServerResponse serverResponse = SendHttpRequest(session_token, "POST", "/PasswordVault/WebServices/auth/Cyberark/CyberArkAuthenticationService.svc/Logoff", "");
+            if (IsFailure(serverResponse)) {
+                //rc = 1;
+                return 1;
             }
-206
-            return serverResponse;
-207
+            else {
+                return 0;
+            }
+
+            //return rc;
         }
-208
-​
-209
-        public static int RunPacli(string workingDir, string content)
-210
+
+        public static ServerResponse SendHttpRequest(string session_token, string method, string endpoint, string payload)
         {
-211
-            int rc = 0;
-212
+            WebClient client = new WebClient();
+            client.Headers[HttpRequestHeader.ContentType] = "application/json";
+            client.Headers[HttpRequestHeader.Authorization] = session_token;
+
+            //logger.Info(String.Format("server_address: {0}\tendpoint: {1}", server_address + endpoint));
+
+            //Debug
+            /*
+            if (payload.Contains("G_CF-AIM-XXX-APP_HP_XXX_Gst")) {
+                logger.Debug("On entre dans la fonction de CFNUtils...");
+            }
+            */
+
+            Uri uri = new Uri(String.Format("https://{0}{1}", server_address, endpoint));
+            string response = "";
+            WebExceptionStatus status_code = WebExceptionStatus.Success;
+            CyberarkError error = null;
             try {
-213
-                Process p = new Process();
-214
-                p.StartInfo.RedirectStandardOutput = true;
-215
-                p.StartInfo.RedirectStandardError = true;
-216
-                p.StartInfo.UseShellExecute = false;
-217
-                p.StartInfo.CreateNoWindow = true;
-218
-                p.StartInfo.WorkingDirectory = workingDir;
-219
-                p.StartInfo.FileName = workingDir + "\\Pacli.exe";
-220
-​
-221
-                string error = "";
-222
-                foreach (String line in content.Split('\n'))
-223
-                {
-224
-                    p.StartInfo.Arguments = line.Trim();
-225
-                    logger.Debug("Executing PACLI command: " + line);
-226
-                    p.Start();
-227
-                    error = p.StandardError.ReadToEnd();
-228
-                    p.WaitForExit();
-229
-                    if (p.ExitCode != 0)
-230
-                    {
-231
-                        if (!error.Contains("ITATS673E"))
-232
-                        {
-233
-                            logger.Error("PACLI error: " + error);
-234
-                            rc = 1;
-235
-                        }
-236
-                    }
-237
+                if (method.ToUpper().Equals("GET")) {
+                    response = client.DownloadString(uri);
                 }
-238
+                else {
+                    response = client.UploadString(uri, method, payload);
+                }
             }
-239
-            catch (Exception e)
-240
-            {
-241
-                logger.Error("Error while executing PACLI commands: " + e.Message);
-242
+            catch (WebException ex) {
+                response = GetServerErrorMessages(ex);
+
+                //Debug
+                /*
+                if (payload.Contains("G_CF-AIM-XXX-APP_HP_XXX_Gst")) {
+                    logger.Debug(String.Format("Custom debug - response: {0}", response));
+                }
+                */
+
+                if (!String.IsNullOrEmpty(response)) {
+                    try {
+                        error = JsonConvert.DeserializeObject<CyberarkError>(response);
+                    }
+                    catch (JsonSerializationException e) {
+                        logger.Debug("Failed to parse Cyberark Error response: " + e.Message);
+                    }
+                }
+                status_code = ex.Status;
             }
-243
-            return rc;
-244
+            catch (Exception e) {
+                logger.Error("Unexpected error: " + e.Message);
+                status_code = WebExceptionStatus.UnknownError;
+            }
+            finally {
+                client.Dispose();
+            }
+
+            logger.Debug("Response: " + response + System.Environment.NewLine + "StatusCode: " + status_code.ToString());
+            return new ServerResponse(response, error, status_code);
         }
-245
-​
-246
-        public class ServerResponse
-247
+
+        private static string GetServerErrorMessages(WebException ex)
         {
-248
+            String serverResponse = "";
+            logger.Error(ex.Message.ToString());
+            if (ex.Response != null)
+            {
+                try
+                {
+                    StreamReader reader = new StreamReader(ex.Response.GetResponseStream());
+                    serverResponse += reader.ReadToEnd();
+                }
+                catch (Exception e)
+                {
+                    logger.Debug("Failed to read server response stream: " + e.Message);
+                }
+            }
+            return serverResponse;
+        }
+
+        public static int RunPacli(string workingDir, string content)
+        {
+            int rc = 0;
+            try {
+                Process p = new Process();
+                p.StartInfo.RedirectStandardOutput = true;
+                p.StartInfo.RedirectStandardError = true;
+                p.StartInfo.UseShellExecute = false;
+                p.StartInfo.CreateNoWindow = true;
+                p.StartInfo.WorkingDirectory = workingDir;
+                p.StartInfo.FileName = workingDir + "\\Pacli.exe";
+
+                string error = "";
+                foreach (String line in content.Split('\n'))
+                {
+                    p.StartInfo.Arguments = line.Trim();
+                    logger.Debug("Executing PACLI command: " + line);
+                    p.Start();
+                    error = p.StandardError.ReadToEnd();
+                    p.WaitForExit();
+                    if (p.ExitCode != 0)
+                    {
+                        if (!error.Contains("ITATS673E"))
+                        {
+                            logger.Error("PACLI error: " + error);
+                            rc = 1;
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                logger.Error("Error while executing PACLI commands: " + e.Message);
+            }
+            return rc;
+        }
+
+        public class ServerResponse
+        {
             public string response;
-249
             public CyberarkError cyberarkError;
-250
             public WebExceptionStatus statusCode;
-251
-​
-252
+
             public ServerResponse(string response, CyberarkError error, WebExceptionStatus code)
+            {
+                this.response = response;
+                this.cyberarkError = error;
+                this.statusCode = code;
+            }
+        }
+
+        public class CyberarkError
+        {
+            public string ErrorMessage { get; set; }
+            public string ErrorCode { get; set; }
+        }
+
+        public static bool IsFailure(ServerResponse serverResponse)
+        {
+            return serverResponse.cyberarkError != null || !serverResponse.statusCode.Equals(WebExceptionStatus.Success);
+        }
+
+
+        public static string GeneratePacliCmds(string templateFile, NameValueCollection replacementDict)
+        {
+            try
+            {
+                StreamReader reader = new StreamReader(templateFile);
+                string content = reader.ReadToEnd();
+                reader.Close();
+                foreach (string placeHolder in replacementDict.AllKeys)
+                {
+                    content = content.Replace(placeHolder, replacementDict[placeHolder]);
+                }
+                //StreamWriter writer = new StreamWriter(dstFile);
+                //writer.Write(content);
+                //writer.Close();
+                return content;
+            }
+            catch (IOException e)
+            {
+                logger.Error("Failed to generate PACLI command file: " + e.Message);
+                return null;
+            }
+
+        }
+
+        public static string CleanString(string dirtyString)
+        {
+            string removeChars = "?&^$#@!+<>\\/«»";
+            string result = dirtyString;
+
+            foreach (char c in removeChars)
+            {
+                result = result.Replace(c.ToString(), string.Empty);
+            }
+
+            return result;
+        }
+
+        public static bool IsProdEnv() {
+            return CFNUtils.env.ToUpper().Equals("PRD") || CFNUtils.server_address.Equals("coffrefort.intranatixis.com") || CFNUtils.server_address.Equals("asiavault.intranatixis.com");
+        }
+
+        public static string AIMGetPassword(string safeName, string appId, string objectName) {
+            PSDKPasswordRequest passRequest = new PSDKPasswordRequest();
+            passRequest.AppID = appId;
+            passRequest.Safe = safeName;
+            passRequest.Folder = "root";
+            passRequest.Object = objectName;
+            PSDKPassword password = PasswordSDK.GetPassword(passRequest);
+          
+            return password.Content;
+        }
+
+        public static int RunPacliCmds(string folder, string templateFileName, NameValueCollection replacementDict)
+        {
+
+            int rc = 0;
+            string templateFile = folder + "\\" + templateFileName;
+            string content = GeneratePacliCmds(templateFile, replacementDict);
+
+            if (content != null)
+            {
+                logger.Info("Run PACLI commands...");
+                rc = RunPacli(folder, content);
+            }
+            else
+            {
+                rc = 2;
+            }
+            return rc;
+        }
+
+        public static PrincipalContext ConnectAD(string ADserver, string ADdomain, string ADuser, string ADpassword)
+        {
+            // Querying Active Directory
+            // System.Security.Principal.WindowsImpersonationContext impersonationContext;
+            // impersonationContext = ((System.Security.Principal.WindowsIdentity)User.Identity).Impersonate();
+
+            PrincipalContext ctx = null;
+            try {
+                if (useSSL) {
+
+                    ADserver = ADserver + ":636";
+                    logger.Debug("--> Connecting to " + ADserver);
+                    ContextOptions options = ContextOptions.SimpleBind | ContextOptions.SecureSocketLayer;
+                    ctx = new PrincipalContext(ContextType.Domain, ADserver, ADdomain, options, ADuser, ADpassword);
+                } else {
+                    ctx = new PrincipalContext(ContextType.Domain, ADserver, ADdomain, ADuser, ADpassword);
+                }
+
+            } catch (Exception ex) {
+                logger.Error("Failed to connect to AD: " + ex.ToString());
+                return null;
+            }
+
+            return ctx;
+        }
+
+        public static LdapConnection LdapConnectAD(string ADserver, string ADdomain, string username, string password)
+        {
+            // Querying Active Directory
+            //LdapConnection ldapConn = new LdapConnection(ADdomain);
+            if (useSSL)
+            {
+                ADserver = ADserver + ":636";
+
+            }
+            LdapConnection ldapConn = new LdapConnection(ADserver);
+            try
+            {       
+                   
+                    logger.Debug("--> Connecting to " + ADserver);
+                    var networkCredential = new NetworkCredential(username, password, ADdomain);
+                    ldapConn.SessionOptions.VerifyServerCertificate = new VerifyServerCertificateCallback((con, cer) => true);
+                    if (useSSL)
+                    {
+                        ldapConn.SessionOptions.SecureSocketLayer = useSSL;
+                        ldapConn.SessionOptions.ProtocolVersion = 3;
+                    }
+                   
+                    ldapConn.AuthType = AuthType.Negotiate;
+                    ldapConn.Bind(networkCredential);
+                    logger.Info("Bind OK.");
+            }
+            catch (LdapException ex)
+            {
+                if (!ex.ErrorCode.Equals(0x31))
+                {
+                    logger.Error("Failed to connect to AD using LdapConnection: " + ex.ToString());
+                    return null;
+                }
+                else
+                {
+                    logger.Error("Failed to connect to AD using LdapConnection: invalid credentials");
+                    return null;
+                }
+            }
+
+            return ldapConn;
+        }
+
+        public static string FindAdAccountLdap(LdapConnection ldapConn, string searchFilter, string attributeName, string scope)
+        {
+            string samAccountName = null;
+
+            try {
+                logger.Info("Searching account " + searchFilter);
+                string ldapFilter = String.Format("(&(objectClass=user)({0}={1}))", attributeName, searchFilter);
+                logger.Debug("Ldap filter:" + ldapFilter);
+                string[] attributes = { "sAMAccountName" };
+                SearchRequest searchRequest = new SearchRequest(scope, ldapFilter, System.DirectoryServices.Protocols.SearchScope.Subtree, attributes);
+                SearchResponse response = (SearchResponse)ldapConn.SendRequest(searchRequest);
+
+                if (response != null && response.Entries.Count > 0) {
+                    samAccountName = response.Entries[0].Attributes["sAMAccountName"][0].ToString();
+                } else {
+                    logger.Info("No account matching " + searchFilter + " found");
+                }
+            } catch (Exception ex) {
+                logger.Error("Error while searching account " + searchFilter + ": " + ex.ToString());
+            } finally {
+                ldapConn.Dispose();
+            }
+
+            return samAccountName;
+        }
+
+        public static string FindAdGroupLdap(LdapConnection ldapConn, string searchFilter, string attributeName, string scope)
+        {
+            string samAccountName = null;
+
+            if (ldapConn != null) {
+                try {
+                    logger.Info("Searching group " + searchFilter);
+                    string ldapFilter = String.Format("(&(objectClass=group)(sAMAccountName={0}))", searchFilter);
+
+                    //logger.Debug("Ldap filter:" + ldapFilter);
+                    logger.Debug(String.Format("Ldap filter: {0}", ldapFilter));
+                    string[] attributes = { attributeName };
+                    SearchRequest searchRequest = new SearchRequest(scope, ldapFilter, System.DirectoryServices.Protocols.SearchScope.Subtree, attributes);
+                    SearchResponse response = (SearchResponse)ldapConn.SendRequest(searchRequest);
+                    if (response != null && response.Entries.Count > 0) {
+                        samAccountName = response.Entries[0].Attributes[attributeName][0].ToString();
+                    } else {
+                        logger.Info("No group matching " + searchFilter + " found");
+                    }
+                }
+                catch (Exception ex) {
+                    logger.Error("Error while searching group " + searchFilter + ": " + ex.ToString());
+                }
+                //finally
+                //{
+                //    ldapConn.Dispose();
+                //}
+                
+            }
+            return samAccountName;
+        }
+
+        public static ServerResponse CreateSafeV2(string sessionToken, string safeName, string managingCPM, string description, bool oLACEnabled, int numberOfDaysRetention)
+        {
+            string create_safe_endpoint = "/PasswordVault/API/Safes";
+            JObject payload = new JObject(
+                new JProperty("safeName", safeName),
+                new JProperty("managingCPM", managingCPM), 
+                new JProperty("description", description), 
+                new JProperty("oLACEnabled", oLACEnabled), 
+                new JProperty("numberOfDaysRetention", numberOfDaysRetention)
+                //new JProperty("numberOfVersionsRetention", null),
+                //new JProperty("location", "")
+                );
+
+            logger.Info(String.Format("--> Create safe {0}", safeName));
+            logger.Debug(String.Format("Create safe Payload = {0}", payload.ToString()));
+            ServerResponse serverResponse = CFNUtils.SendHttpRequest(sessionToken, "POST", create_safe_endpoint, payload.ToString());
+            return serverResponse;
+        }
+
+    }
+}
