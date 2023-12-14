@@ -1,0 +1,1468 @@
+*{ 
+font-family:Verdana,Helvetica,sans-serif; font-size:11px; 
+}
+html, body{width:100%;margin:0;padding:0;}
+
+body { 
+color: black; font-family:Verdana,Helvetica,sans-serif; font-size:11px;position: relative;
+overflow-x:hidden;overflow-y:auto;}
+#Weboscope-logo{display:none;}
+.form                  { font: normal 8pt arial,helvetica,sans-serif; color: #333333; border: 1px solid #333333; }
+.Portlet               {}
+.PortletSkinable       {}
+/* .Portlet A             { color: #333388; text-decoration: none;     } */
+/* .Portlet A:hover       { text-decoration: underline;                } */
+
+/* Member photo thumnail */
+.Member.fullDisplay img.thumbnail {
+  margin: 5px 5px 5px 0;
+} 
+
+/* WebPage thumnail */
+.WebPage.resultDisplay img.thumbnail,
+.WebPage.fullDisplay img.thumbnail {
+  margin: 5px 5px 5px 0;
+}
+
+.WebPage.resultDisplay a.thumbnail,
+.WebPage.fullDisplay a.thumbnail {
+  float: left;
+}
+
+.hidden{
+display:none;
+}
+
+ /* Span used when there is no image to display */
+ .WebPage.resultDisplay a.thumbnail span,
+ .WebPage.fullDisplay a.thumbnail span {
+   display: block;
+   border: 1px solid #BBBBBB;
+   color: #888888;
+   background-color: #EEEEEE;
+   text-align: center;
+   margin: 5px 5px 5px 0;
+ }
+ .WebPage.resultDisplay a.thumbnail span {
+   width: 64px; /* img width (60) + img padding (2*2) */
+   height: 48px; /* img height (44) + img padding (2*2) */
+   font-size: 44px;
+ }
+ .WebPage.fullDisplay a.thumbnail span {
+   width: 124px; /* img width (120) + img padding (2*2) */
+   height: 94px; /* img height (90) + img padding (2*2) */
+   font-size: 90px;
+ }
+
+/* -------------------------------------------------------------------- */
+/* |||||||||||||||||||||| PORTLET ROW CSS ||||||||||||||||||||||||||||| */
+/* -------------------------------------------------------------------- */
+
+/* <CSS label="Standard" value="Standard" type="PortletRow" target="SkinItem" description="Style for all PortletRow" /> */
+.PortletRow_Standard .tabNav  A                { background-color: #888888; color: #FFFFFF;                               }
+.PortletRow_Standard .tabNav  A:hover          { background-color: #DDDDDD; color: #333333;                               }
+.PortletRow_Standard .tabNav  A.active,
+.PortletRow_Standard .tabNav  A:link.active, 
+.PortletRow_Standard .tabNav  A:visited.active { background-color: #DDDDDD; border-bottom-color: #DDDDDD; color: #333333; }
+.PortletRow_Standard .tabMain                  { background-color: #DDDDDD;                         }
+
+/* -------------------------------------------------------------------- */
+/* ||||||||||||||||||||| PORTLET COLUMN CSS ||||||||||||||||||||||||||| */
+/* -------------------------------------------------------------------- */
+
+/* <CSS label="Standard" value="Standard" type="PortletColumn" target="SkinItem" description="Style for all PortletRow" /> */
+.PortletColumn_Standard .tabNav  A                { background-color: #888888; color: #FFFFFF;                               }
+.PortletColumn_Standard .tabNav  A:hover          { background-color: #DDDDDD; color: #333333;                               }
+.PortletColumn_Standard .tabNav  A.active,
+.PortletColumn_Standard .tabNav  A:link.active, 
+.PortletColumn_Standard .tabNav  A:visited.active { background-color: #DDDDDD; border-bottom-color: #DDDDDD; color: #333333; }
+.PortletColumn_Standard .tabMain                  { background-color: #DDDDDD;                         }
+
+
+/* -------------------------------------------------------------------- */
+/* ||||||||||||||||| PORTLET WORKFLOW CSS ||||||||||||||||||||||||||||| */
+/* -------------------------------------------------------------------- */
+
+.WFtree {	margin: 4px; font: 12px Arial, Helvetica, Sans-Serif; }
+.WFtree img  { vertical-align: text-bottom ; }
+.WFtree ul { margin: 0px; padding: 0px;	list-style-type: none; }
+.WFtree li { margin: 0px; white-space: nowrap ; line-height: 100%}
+.WFtree ul ul { padding-left: 7px; font-size: 90%; }
+
+
+/* -------------------------------------------------------------------- */
+/* ||||||||||||||||| QUERY/FOREACH REFINED CSS |||||||||||||||||||||||| */
+/* -------------------------------------------------------------------- */
+/* <CSS label="Standard" value="Standard" type="PortletQueryForeachDetail" target="SkinItem" description="Style for all PortletQueryForeach" /> */
+
+.PortletQueryForeachDetail .title        { background-repeat: no-repeat; background-position: 2px 6px; padding-left: 12px;  }
+
+.PortletQueryForeachDetail_Standard               { font: normal 12px arial,helvetica,sans-serif; }
+.PortletQueryForeachDetail_Standard .result       { margin-bottom: 15px; }
+.PortletQueryForeachDetail_Standard td            { font: normal 12px arial,helvetica,sans-serif; }
+.PortletQueryForeachDetail_Standard .title        { font-size: 12px; font-weight: bold; background-repeat: no-repeat; background-position: left 4px; padding-left: 12px;  }
+.PortletQueryForeachDetail_Standard .abstract p   { margin: 0; padding: 0; }
+.PortletQueryForeachDetail_Standard .author       { font-weight: bold;  }
+.PortletQueryForeachDetail_Standard .date         { font-style: italic; }
+.PortletQueryForeachDetail_Standard .PagerLink    { font-weight: bold;  }
+.PortletQueryForeachDetail_Standard .addNew       { font-weight: bold;  }
+.PortletQueryForeachDetail_Standard .categories   { display: inline; }
+.PortletQueryForeachDetail_Standard .reviewBlock  { display: inline; margin-left: 10px;}
+
+/* <CSS label="Title" value="Title" type="PortletQueryForeachDetail" target="SkinItem" description="Style for all PortletQueryForeach" /> */
+
+.PortletQueryForeachDetail_Title                  { font: normal 12px arial,helvetica,sans-serif; }
+.PortletQueryForeachDetail_Title td               { font: normal 12px arial,helvetica,sans-serif; }
+.PortletQueryForeachDetail_Title .title           { font-weight: bold; background-repeat: no-repeat; background-position: left 4px; padding-left: 12px;  }
+.PortletQueryForeachDetail_Title .abstract p      { margin: 0; padding: 0; }
+.PortletQueryForeachDetail_Title .PagerLink       { font-weight: bold;  }
+.PortletQueryForeachDetail_Title .addNew          { font-weight: bold;  }
+
+/* -------------------------------------------------------------------- */
+/* |||||||||||||||||||||| QUERY/FOREACH CSS ||||||||||||||||||||||||||| */
+/* -------------------------------------------------------------------- */
+/* <CSS label="Standard" value="Standard" type="PortletQueryForeach" target="SkinItem" description="Style for all PortletNavigate" /> */
+
+.PortletQueryForeach_Standard P                { }
+.PortletQueryForeach_Standard TD               { font-size: 90%; }
+.PortletQueryForeach_Standard .abstractDetail  { font-size: 90%; }
+.PortletQueryForeach_Standard .PagerLink       { font: bold 9pt arial,helvetica,sans-serif;  }
+.PortletQueryForeach_Standard .addNew   { font-weight: bold;  }
+
+/* -------------------------------------------------------------------- */
+/* |||||||||||||||||||||||| NAVIGATE CSS |||||||||||||||||||||||||||||| */
+/* -------------------------------------------------------------------- */
+/* <CSS label="White" value="White" type="PortletNavigate" target="SkinItem" description="Style for all PortletNavigate" /> */
+
+.PortletNavigate_White                    { font: bold 10pt arial,helvetica,sans-serif; color: white; white-space: nowrap;}
+.PortletNavigate_White A                  { font: bold 10pt arial,helvetica,sans-serif; color: white; white-space: nowrap;}
+.PortletNavigate_White .locationPrefix    { font: bold 10pt arial,helvetica,sans-serif; color: white; white-space: nowrap;}
+.PortletNavigate_White .locationSeparator { font: bold 10pt arial,helvetica,sans-serif; color: white; white-space: nowrap;}
+
+/* <CSS label="JSS" value="JSS" type="PortletNavigate" target="SkinItem" description="Style for Jalios Simple Skin PortletNavigate" /> */
+
+.PortletNavigate_JSS       { font: bold 10pt arial,helvetica,sans-serif; color: #CC0000; height: 25px; vertical-align: top; white-space: nowrap;}
+.PortletNavigate_JSS  A    { font: bold 10pt arial,helvetica,sans-serif; color: #CC0000; white-space: nowrap;}
+
+
+/* -------------------------------------------------------------------- */
+/* ||||||||||||||||||||||||| MENU CSS ||||||||||||||||||||||||||||||||| */
+/* -------------------------------------------------------------------- */
+/* <CSS label="White" value="White" type="PortletMenu" target="SkinItem" description="Style for all PortletMenu" /> */
+
+.PortletMenu_White     { font: bold 10pt arial,helvetica,sans-serif; color: white; white-space: nowrap;}
+.PortletMenu_White A   { font: bold 10pt arial,helvetica,sans-serif; color: white; white-space: nowrap;}
+
+/* <CSS label="JSS" value="JSS" type="PortletMenu" target="SkinItem" description="Style for Jalios Simple Skin PortletNavigate" /> */
+.PortletMenu_JSS       { font: bold 10pt arial,helvetica,sans-serif; color: #CC0000; height: 25px; vertical-align: top; white-space: nowrap;}
+.PortletMenu_JSS  A    { font: bold 10pt arial,helvetica,sans-serif; color: #CC0000; white-space: nowrap;}
+
+
+/* -------------------------------------------------------------------- */
+/* ||||||||||||||||||||| LOGIN/LOGOUT CSS ||||||||||||||||||||||||||||| */
+/* -------------------------------------------------------------------- */
+/* <CSS label="Standard" value="Standard" type="PortletLogin" target="SkinItem" description="Style for all PortletLogin" /> */
+
+.PortletLogin_Standard  TD         { font: bold 10pt arial,helvetica,sans-serif; color: black;}
+.PortletLogin_Standard .Login      { font-size: 9pt; }
+.PortletLogin_Standard .Password   { font-size: 9pt; }
+
+/* <CSS label="Modern" value="Modern" type="PortletLogin" target="SkinItem" description="Style for all PortletLogin" /> */
+
+.PortletLogin_Modern  INPUT            { font-size: 11px; margin: 0px; }
+.PortletLogin_Modern  TD               { margin: 0; padding: 0; font-family: arial,helvetica,sans-serif; font-size: 10px; }
+.PortletLogin_Modern .Intro            { text-align: left; font-size: 11px; padding: 3px; border: 1px solid #999; background-color: #DDD; }
+.PortletLogin_Modern .Login            { padding-top: 3px; }
+.PortletLogin_Modern .Login INPUT      { font-size: 10px; }
+.PortletLogin_Modern .Password INPUT   { font-size: 10px; }
+.PortletLogin_Modern .formInfo         { padding: 3px 0px; }
+.PortletLogin_Modern .formInfo INPUT   { margin-right: 3px; }
+
+/* -------------------------------------------------------------------- */
+/* |||||||||||||||||||||||| SIGNUP CSS |||||||||||||||||||||||||||||||| */
+/* -------------------------------------------------------------------- */
+/* <CSS label="Standard" value="Standard" type="PortletSignUp" target="SkinItem" description="Style for all PortletSignUp" /> */
+
+.PortletSignUp_Standard  TD        { font: normal 10pt arial,helvetica,sans-serif; color: black;}
+
+
+/* -------------------------------------------------------------------- */
+/* |||||||||||||||||||||||| SEARCH CSS |||||||||||||||||||||||||||||||| */
+/* -------------------------------------------------------------------- */
+/* <CSS label="Standard" value="Standard" type="PortletSearch" target="SkinItem" description="Style for all PortletSearch" /> */
+
+.PortletSearch_Standard  TD  A    { font: bold 10pt arial,helvetica,sans-serif; color: white; text-decoration:none }
+
+/* -------------------------------------------------------------------- */
+/* |||||||||||||||||||||| TOPMEMBER CSS ||||||||||||||||||||||||||||||| */
+/* -------------------------------------------------------------------- */
+/* <CSS label="Standard" value="Standard" type="PortletTopMember" target="SkinItem" description="Style for all PortletTopMember" /> */
+
+.PortletTopMember_Standard  .Title     { font: bold 10pt arial,helvetica,sans-serif; color: black; }
+.PortletTopMember_Standard  .Link      { font: bold 9pt arial,helvetica,sans-serif; color: black; }
+
+/* -------------------------------------------------------------------- */
+/* |||||||||||||||||||||||| LOCATION CSS |||||||||||||||||||||||||||||| */
+/* -------------------------------------------------------------------- */
+/* <CSS label="Standard" value="Standard" type="PortletLocation" target="SkinItem" description="Style for all PortletLocation" /> */
+
+.PortletLocation_Standard             { font: bold 10pt arial,helvetica,sans-serif; }
+.PortletLocation_Standard A           { font: bold 10pt arial,helvetica,sans-serif; }
+.PortletLocation_Standard .prefix     { font: bold 10pt arial,helvetica,sans-serif; }
+.PortletLocation_Standard .separator  { font: bold 10pt arial,helvetica,sans-serif; }
+
+/* -------------------------------------------------------------------- */
+/* ||||||||||||||||||||||||||| RSS CSS |||||||||||||||||||||||||||||||| */
+/* -------------------------------------------------------------------- */
+/* <CSS label="Standard" value="Standard" type="PortletRSS" target="SkinItem" description="Style for all PortletRSS" /> */
+
+.PortletRSS_Standard .PortletRSS					{ font: normal 9pt Arial,Helvetica,Sans-Serif; }
+.PortletRSS_Standard .RssTitle    				{ font-weight: bold; font-size: 11pt; color: #333333; }
+.PortletRSS_Standard .RssDescription			{ }
+.PortletRSS_Standard .RssItemSel					{ font-weight: bold; margin:0; padding: 0px 4px; border-collapse: collapse; }
+.PortletRSS_Standard .RssItemUnsel				{ font-weight: normal; margin:0; padding: 0px 4px; border-collapse: collapse; }
+.PortletRSS_Standard .RssItemLink		 			{ }
+.PortletRSS_Standard .RssItemDescription	{ font-weight: normal; background-color:#ffffcc; padding: 6px; margin-bottom: 6px; font-size: 8pt; }
+
+
+
+
+
+/***********************************************************************************************************************/
+
+/* -------------------------------------------------------------------- */
+/* ||||||||||||||||||| CUSTOM  INTRANET NATIXIS ||||||||||||||||||||||| */
+/* -------------------------------------------------------------------- */
+
+
+a:hover	{ text-decoration:none; }
+a img 	{	border-width:0px; }
+img.logo 	{border:0 none;bottom:0;height:47px;margin-top:20px;}
+
+.topBar { height:33px; position:relative; }
+.date   { color:#581D74; font-size:10px; }
+
+.linkAll{						
+	clear:both;
+	color:#581d74;
+	display:block;
+	font-style: italic;
+	font-size:10px;
+	padding:0px 3px 3px 0;
+	text-align:right;
+	white-space:nowrap;
+	}
+
+#news a.linkAll{background: none;float:right;}
+
+/* -------------------------------------------------------------------- */
+/* ||||||||||||||||||| HEADER - language List  |||||||||||||||||||||||| */
+/* -------------------------------------------------------------------- */
+#header {
+	display:inline-table;
+	font-size:10px;
+	clear:both;
+	width:1000px;
+	}
+
+#header .barreLangue .langOn {
+	color:#FF0000;
+	font-weight:bold;
+	padding-right:5px;
+	text-decoration:none;
+	vertical-align:100%;
+}
+
+#header .barreLangue .langOff {
+	color:#0D0D37;
+	font-weight:bold;
+	padding-right:5px;
+	text-decoration:none;
+	vertical-align:100%;
+}
+
+#header .barreLangue .langSep {
+	padding-right:4px;
+	text-decoration:none;
+}
+
+/* -------------------------------------------------------------------- */
+/* ||||||||||||||  HEADER - Transverse Navigation  |||||||||||||||||||| */
+/* -------------------------------------------------------------------- */
+
+#header .lienTransv {
+	float:left;
+	margin-left:30px;
+}
+#header .barreLangue .texteLienOn {
+	color:#FF0000;
+	padding-right:6px;
+	vertical-align:100%;
+}
+#header .barreLangue .texteLienOff {
+	color:#666666;
+	padding-right:6px;
+	vertical-align:100%;
+}
+
+.navTop {
+
+	float:right;
+	vertical-align:top;
+	display:inline;
+	height:33px;
+	list-style-image:none;
+	list-style-type:none;
+	margin:0pt;
+	padding:0pt;
+	margin-top:-10px;
+	/*position:absolute;*/
+	right:0pt;
+	top:0pt;
+}
+.navTop li {
+	background:transparent url(../img/PuceVioletteDroite.gif) no-repeat scroll left center;
+	color:#FF0000;
+	float:left;
+	height:20px;
+	line-height:20px;
+	margin:10px 0pt 0pt 9px;
+	padding:0pt 0pt 0pt 10px;
+}
+
+.navTop a {
+	color:#666666;
+}
+
+
+.navBreadcrumbs {
+	float:left;
+	vertical-align:top;
+	display:inline;
+	height:33px;
+	list-style-image:none;
+	list-style-type:none;
+	margin:0pt;
+	padding:0pt;
+	margin-top:-10px;
+	/*position:absolute;*/
+	right:0pt;
+	top:0pt;
+}
+.navBreadcrumbs li {
+	background:transparent url(../img/PuceVioletteDroite.gif) no-repeat scroll left center;
+	float:left;
+	height:20px;
+	line-height:20px;
+	margin:10px 0pt 0pt 10px;
+	padding:0pt 0pt 0pt 10px;
+	font-style: italic;
+}
+.navBreadcrumbs li.current {
+	background:url("../img/puceGriseBreadcrumb.gif") no-repeat scroll left center transparent
+}
+.navBreadcrumbs a {
+	color:#581d74;
+}
+
+.navBreadcrumbs span {
+	color:#333333;
+}
+
+
+/* -------------------------------------------------------------------- */
+/* ||||||||||||||||||| HEADER - Main Search    |||||||||||||||||||||||| */
+/* -------------------------------------------------------------------- */
+
+/* -------------------------------------------------------------------- */
+/* ||||||||||||||||||||||||  HEADER - Logo  ||||||||||||||||||||||||||| */
+/* -------------------------------------------------------------------- */
+#header .logo {
+	background:transparent url(../img/header.jpg) no-repeat scroll right bottom;
+}
+#header .logoImg {
+vertical-align: bottom;
+}
+
+/* -------------------------------------------------------------------- */
+/* |||||||||||||||||||  HEADER - Main Navigation  ||||||||||||||||||||| */
+/* -------------------------------------------------------------------- */
+
+#navMain{top:-1000px;}
+.pageLoad #navMain{top:0;width:100%;position:absolute;}
+
+.navMain {
+	background-color:transparent;
+	color:#581D74;
+	display:block;
+	font-size:11px;
+	font-weight:bold;
+	list-style-image:none;
+	list-style-type:none;
+	margin:0px;
+	padding:0px;
+	white-space:nowrap;
+
+}
+
+.navMain {
+left:0;
+padding-left:0;
+
+top:0;
+z-index:3;
+}
+
+
+.navMain li {
+	background-color:transparent;
+	border:0;
+	float:left;
+	text-align:left;
+	white-space:normal;
+	z-index:99;
+}
+
+.navMain li.navMainItem:hover {float:left;}
+.navMain li.navMainOutils a {
+	background:transparent url(../img/tool_bg.gif) no-repeat scroll left center;
+	color:#FFFFFF;
+	padding-left:12px;
+}
+.navMain a {
+	color:#581D74;
+	font-family:verdana;
+	font-size:12px;
+	font-weight:normal;
+	text-decoration:none;
+}
+
+.navMain li.navMainItem ul{
+	border:10px none;
+	list-style-image:none;
+	list-style-position:outside;
+	list-style-type:none;
+	padding:5px 0 0;
+	text-align:left;
+	margin:0 0 0 3px;
+	display:table-row;
+}
+
+.navMain li.navMainItem:hover ul li a{
+	color:#581D74;
+	white-space:normal;
+	width:auto;
+}
+.navMain li.navMainItem:hover ul li a.titleNav2,
+.navMain li.navMainItem:hover ul li span.titleNav2 {
+font-size:12px;
+font-weight:bold;
+padding-bottom:10px;
+}
+
+.navMain li.navMainItem ul li a:hover,.navMain li.navMainItem:hover ul li ul li a:hover{
+	color:#C5B5B9;text-decoration:none;
+}
+
+.navMain li.navMainOutils:hover {
+	background-image:none;
+}
+.navMain li.navMainOutils {
+	background-color:#581D74;
+	border-right:1px solid #581D74;
+	color:#FFFFFF;
+	width:68px;
+}
+
+.navMain .muNavH1 {
+  font-size:12px;
+  margin:0px;
+  padding:0px;  
+}
+/*  3eme niveau ******************************************************************/
+
+
+/************************************************************************/
+
+.navMain li.navMainItem:hover ul li ul{
+	background-color:transparent;
+	border:0;
+	list-style-image:none;
+	list-style-position:outside;
+	list-style-type:none;
+	padding:0;
+	text-align:left;
+}
+
+.navMain li.navMainItem:hover ul li ul li {
+	background:url("../img/PuceNiveau2.gif") no-repeat scroll 6px 5px transparent;
+	border:0;
+	float:none;
+	padding-left:20px;
+	text-align:left;
+	width:auto;
+	color:#C5B5B9;
+}
+.navMain li.navMainItem:hover ul li ul li a {
+	
+	color:#581D74;
+	white-space:normal;
+	width:auto;
+	font-size:10px;
+	text-decoration:underline;
+	line-height:12px;
+}
+
+/** le nouveau menu*/
+.navMain{
+    top:0;z-index:3;padding-left:0;
+ } 
+
+.navMain .navMainItem{float:left;font-size:1em;}
+.navMain .navMainItem a.mainNav1Cur{background:url("../img/mainHoverAlternativ.gif") no-repeat scroll 50% bottom transparent;padding-bottom:4px;display:block;}
+.navMain li.navMainItem:hover a.mainNav1{background:url("../img/mainHoverAlternativ.gif") no-repeat scroll 50% bottom transparent;padding-bottom:5px;}
+
+.navMain li a.navMainItemHover{background:url("../img/mainHoverAlternativ.gif") no-repeat scroll 100% 90% transparent;padding-bottom:5px;display:block;}
+
+
+a.mainNav1 {
+	text-transform: uppercase;
+	font-size: 11px;
+	padding-left:0;
+	}
+a.navMainItemHover 
+{
+	text-transform: uppercase;
+	font-size: 11px;
+	padding-left:0;
+}
+
+.navMain .itemLink{text-decoration:none;display:block;z-index:4;}
+.navMain .itemTitle{margin-right:1px;}
+.navMain img.itemTitle{display:block}/* seulement si le titre est une image : display:block; */
+.navMain li.navMainItem:hover .itemShowAction{z-index:6}
+
+.navMain .itemContent{
+background:#E9E9E9;
+border-top:1px solid white;
+left:0;
+margin-top:32px;
+position:absolute;
+top:-5000px;
+
+
+}
+
+.navMain .itemContent .blocSeparateur {
+height:100%;
+margin-left:-8px;
+position:absolute;
+top:0;
+width:10px;
+padding-top:0px;
+}
+.navMain .itemContent td{
+	padding-left:10px;
+	vertical-align:top;
+}
+.navMain .itemContent td.separateur{
+	background:url("../img/separateur.gif") repeat-y scroll 0 0 transparent;
+}
+.navMain .itemContent a{display:inline-block;padding:0 2px; }
+.navMain li.navMainItem:hover .itemContent{top:0;z-index:5;left:0;padding-bottom:20px;}
+
+
+/** le nouveau menu*/
+.menuNavFooter{width:99.9%;background:#E9E9E9;border:1px solid #E9E9E9;}
+.navFooterContent{display:inline-block;	width:1000px;}
+.metiersBloc{float:left;margin-top:3px;}
+.navFooter{display:block;}
+
+
+.navFooter li{float:left;list-style:none;text-align:left;}
+.navFooter li a{
+	color:#581D74;
+	font-weight:bold;
+	display:inline-block;
+	font-size:10px;
+	text-decoration: none; 
+	margin: 0 0 5px 0;
+	
+	}
+.navFooter li a:hover{text-decoration: underline; 	}
+.navFooter li a.muNavH1 {color:#333333;}
+.navFooter li ul li {
+	background:url("../img/PuceNiveau2.gif") no-repeat scroll 6px 5px transparent;
+	float:none;
+	padding-left:9px;
+	display:block !important;
+	display:inline-block;
+}
+.navFooter li ul li span { color: #333333;font-weight: bold;padding-left: 5px;font-size:9px; }
+.navFooter li ul li a { color: #333333;font-weight: normal;font-size:9px;margin: 0;}
+.navFooter li ul li a:hover { text-decoration:underline; }
+.navFooter li ul { text-align: left;margin:0;padding:0; }
+.navFooter{ white-space: normal;font-family: Verdana,Helvetica,sans-serif;text-decoration:none;margin:0;padding:0; }
+
+
+/* -------------------------------------------------------------------- */
+/* |||||||||||||||||||||||||  Clear Blocks  ||||||||||||||||||||||||||| */
+/* -------------------------------------------------------------------- */
+.clearBlocks {
+	background-color:transparent;
+	border:0pt none;
+	clear:both;
+	font-size:0pt;
+	height:0pt;
+	line-height:0pt;
+	margin:0pt;
+	overflow:hidden;
+	padding:0pt;
+	visibility:hidden;
+	width:99%;
+}
+
+
+/* -------------------------------------------------------------------- */
+/* ||||||||||||||||||||||||||||  FOOTER  |||||||||||||||||||||||||||||| */
+/* -------------------------------------------------------------------- */
+
+#footer {
+	background-color:#581D74;
+	color:#FFFFFF;
+	font-size:10px;
+	height:19px;
+	margin-top:6px;
+	width:100%;
+	overflow:visible;
+	text-align:center;
+	display:block;
+}
+
+
+#footer a {
+	color:#FFFFFF;
+	padding-left:10px;
+}
+#footer .separatorMenu{
+	color:white;
+	padding:0 3px;
+}
+/* -------------------------------------------------------------------- */
+/* ||||||||||||||||||||||||||||  COMMON  |||||||||||||||||||||||||||||| */
+/* -------------------------------------------------------------------- */
+
+/* Title banner with red pict on the left */
+.title {
+	background:transparent url("../img/trameViolette.gif") no-repeat scroll 0 top;
+	color:#581d74;
+	font-size:12px;
+	font-weight:bold;
+	height:20px;
+	margin:0 0 10px !important;
+	padding: 0 0 0 45px;
+}
+.imageTitle {
+	background:transparent url(../img/picto_Titre.gif) no-repeat scroll left top;
+	height:30px;
+	padding-left:20px;
+	padding-top:5px;
+}
+
+.texteTitle {
+	background-color:#0D0D37;
+	color:#AAE0FA;
+	font-size:12px;
+	font-weight:bold;
+	height:21px;
+	padding:4px 0pt 0pt 5px;
+}
+
+.filetSeparateurArticle {
+	background:url("../img/separateur-horizontal.gif") no-repeat scroll 50% 100% transparent;
+	border:0 none;
+	clear:both;
+	display:block;
+	height:10px;
+	padding:0 0;
+	margin: 10px 0;
+}
+.separateur20{margin: 20px 0;}
+.separateur25{margin: 25px 0;}
+/* TO DELETE doesnt work under IE*/
+.hrBlue {
+	background-color:#AAE0FA;
+	height:1px;
+	width:100%;
+}
+
+.mainContainer{
+width:1000px;
+overflow:hidden;
+}
+
+.structureHtml {
+color:white;
+font-family:verdana;
+font-size:13px;
+font-weight:bold;
+}
+#listeActu .structureHtml {
+color:#581D74;
+}
+#main
+{
+	width:100%;
+	text-align:center;
+	font-family:verdana;
+	font-size:10px;
+}
+table
+{
+	margin:0px;
+	border-collapse:collapse;
+	width:100%;
+	height:100%;
+}
+table.Row{
+	width:1000px;
+	display:inline-block;
+	}
+a {
+	color:#581D74;
+	font-family:verdana;
+	font-size:11px;
+	padding-left:4px;
+	text-decoration:underline;
+	
+}
+
+
+input
+{
+	background-color:#e9e9e9;
+	font-family:verdana;
+	font-size:11px;
+	color:#333333;
+	border-collapse:collapse;
+	border-spacing:0;
+	border:none;
+	
+}
+input.btnSubmit{ background-color: #E9E9E9; }
+
+#formulaireAnnuaire
+{
+padding-bottom:3px;
+padding-top:3px;
+padding-left:3px;
+padding-right:3px;
+margin:0px;
+border:none;
+}
+
+a.puce
+{
+	background:url("../img/fleche_Rouge.gif") no-repeat scroll left 1px transparent;
+	padding-left:8px;
+}
+
+
+.texte
+{
+color:#333333;
+font-family:verdana;
+font-size:10px;
+}
+
+.titreActu
+{
+color:#581D74;
+font-family:verdana;
+font-size:10px;
+font-weight:bold;
+}
+
+.headerTransversalTop{
+	background:url("../img/topGradient.gif") repeat-x scroll 0 0 #E9E9E9;
+	clear:both;
+	height:38px;
+	width:100%;
+	top:50%;
+	
+}
+.headerTransversalGris{
+	width:100%;
+	background:url("../img/bottomGradient.gif") repeat-x scroll 0 0 #E9E9E9;
+	border-top:2px solid white;
+	height:38px;
+	clear:both;	
+	position:relative;
+}
+
+.headerTransversalViolet{
+	width:100%;
+	background:url("../img/trameVioletteHeader.gif") repeat-x scroll 0 50% #581D74;
+	margin-bottom:-2px;
+}
+.headerTransversalViolet .logoSearch{
+background:url("../img/bandeau.gif") no-repeat scroll 0 0 #581D74;
+display:inline-table;
+height:69px;
+width:1000px;
+}
+
+#menuTransversal
+{
+	width:1000px;
+	margin:0 auto;
+	text-align:right;
+	height:25px;padding-top:12px;
+	}
+#menuTransversal a{
+	padding:0;
+	text-decoration: none;
+}
+#menuTransversal a:hover{
+	text-decoration: underline;
+	}
+.separatorMenu{
+	background:url("../img/transparent.png") no-repeat scroll 050% 0 transparent;
+	padding:0 3px;
+	color:#581D74;
+}
+
+#bandeau
+{
+
+float:left;
+font-family:verdana;
+color:#FFFFFF;
+
+}
+
+#bandeau .titreSite
+{
+
+margin-bottom:0px;
+font-weight:bold;
+font-family:verdana;
+font-size:20px;
+color:#FFFFFF;
+border:none;
+margin:0px;
+padding:0px
+}
+#recherche {
+float:right;
+margin-top:18px;
+}
+
+#logoImg a{
+padding-left:0;
+color:white;
+}
+.TitleEspace{
+color:white;
+font-size:20px;
+position:relative;
+top:30px;
+vertical-align:top;
+font-weight:bold;
+text-transform: uppercase;
+}
+
+#menuHaut{
+width:1000px;
+height:25px;
+margin:0 auto;
+text-align:left;
+position:relative;
+}
+
+#content{
+width:1000px;
+margin:0 auto;
+display:block;
+margin-top:30px;
+}
+
+#aLaUne{
+	vertical-align: top;
+}
+#aLaUne .encadrementGris{padding :0;}
+#aLaUne a{
+background:url("../img/PuceVioletteDroite.gif") no-repeat scroll left 5px transparent;
+padding-left:10px;
+margin-bottom:10px;
+}
+
+#news{
+width:32%;
+vertical-align:top;
+}
+
+#news a { padding-left:10px; background:url("../img/PuceVioletteDroite.gif") no-repeat scroll left 5px transparent;}
+
+#news .encadrementOver{
+margin-right:40px;
+}
+
+#actuMetier{
+margin-right:41px;
+}
+
+#metierCoeur{
+font-family: Verdana;
+vertical-align:top;
+}
+
+#support{
+vertical-align:top;
+float:right;
+}
+
+#support .supportTitle{
+color:#581D74;
+font-size:14px;
+font-weight:bold;
+font-family: Verdana;
+margin:0;
+}
+
+#support .supportTexte{
+color:#333333;
+font-size:10px;
+font-weight:normal;
+font-family: Verdana;
+margin:0;
+}
+
+#support .supportLien{
+color:#333333;
+font-size:10px;
+font-weight:normal;
+font-family: Verdana;
+margin:0;
+}
+
+#support .supportLien{
+padding:0;
+}
+
+#support a{
+color:#581D74;
+font-size:10px;
+padding-left:0px;
+font-weight:normal;
+font-family: Verdana;
+}
+
+#support td.textRight1{
+background-color:#e9e9e9;
+width:14px;
+overflow:visible;
+}
+
+#support td.pxblanc{
+border:0px;
+background-color:#ffffff;
+width:1px;
+overflow:hidden;
+}
+
+#support td.textRight{
+margin-right:41px;
+background-color:#e9e9e9;
+width:14px;
+overflow:visible;
+}
+
+#support td.cellvide{
+	width:16px;
+}
+
+#support table {
+border-collapse:collapse;
+border:0px;
+margin:0px;
+margin-bottom:-2px;
+padding:0px;
+}
+
+.taillesupport{
+}
+
+.taillesupport .titleViolet{
+}
+
+#support .margeadroite{
+width:41px;
+border:0;
+}
+
+#support .imagefleche
+{
+	margin-right:1px;
+	margin-bottom: 0;
+}
+#support .imagefleche a
+{
+	padding:3px;
+}
+
+#support .fleche{
+	cursor: pointer;
+}
+#publicite
+{
+	margin-right:41px;
+	vertical-align:top;
+}
+
+#outils
+{
+	vertical-align:top;
+	width:245px;
+}
+
+#incontournables .titreBloc, #favoris .titreBloc
+{
+	color:#581D74;
+	font-family:verdana;
+	font-size:14px;
+	font-weight:bold;
+}
+
+#titreAnnuaire td.selected
+{
+	color:#581D74;
+	background-color:#d4e1f2;
+	font-weight:bold;
+	font-family:verdana;
+	font-size:10px;
+	text-align:center;
+}
+
+#titreAnnuaire td.unselected
+{
+	color:#d4e1f2;
+	background-color:#581D74;
+	font-weight:bold;
+	font-family:verdana;
+	font-size:10px;
+	text-align:center;
+}
+
+#titreAnnuaire td.unselected a
+{
+	color:#d4e1f2;
+	font-weight:bold;
+}
+
+
+#formAnnuaire
+{
+	color:#333333;
+	background-color:#d4e1f2;
+	width:100%;
+	border:0px;
+	padding:0px;
+	margin:0px;
+	border:0px solid #d4e1f2;
+}
+
+
+#titreAnnuaire
+{
+	width:100%;
+	border:0px;
+	padding:0px;
+	margin:0px;
+}
+#tableAnnuaire
+{
+	width:100%;
+	border:0px;
+	padding:0px;
+	margin:0px;
+	border-collapse:collapse;
+}
+#tableAnnuaire tbody
+{
+	width:100%;
+	border:0px;
+	padding:0px;
+	margin:0px;
+}
+#tableAnnuaire tr
+{
+	width:100%;
+	border:0px;
+	padding:0px;
+	margin:0px;
+}
+#infos
+{
+vertical-align:top;
+width:245px;
+}
+.tablePrinc
+{
+width:100%;
+
+}
+#colonnePrinc
+{
+border:0;
+}
+
+.titleViolet
+{
+	display:inline-block !important;
+	display:inline;
+	background-color:#e9e9e9;
+	color:#581D74;
+	font-weight:bold;
+	font-family:verdana;
+	font-size:13px;
+	overflow:visible;
+	padding:5px 5px 5px 10px;
+	text-transform: uppercase;
+	width:200px;
+
+}
+.titleVioletWidth1{
+	width:70px;
+}
+
+.titleBleu
+{
+	width:120px;
+	background-color:#e9e9e9;
+	color:blue;
+	font-weight:bold;
+	font-family:verdana;
+	font-size:14px;
+	overflow:visible;
+	padding-left:5px
+}
+
+.encadrementGris
+{
+	border:10px solid #e9e9e9;
+	margin: 0 21px 20px 0;
+	font-family:verdana;
+	font-size:10px;
+	padding:10px;
+}
+.encadrementOver{
+	height:260px;
+	overflow-y:auto;
+	overflow-x: hidden;
+}
+.encadrementGrisFixe
+{
+	border:10px solid #e9e9e9;
+	margin:0 41px 20px 0 !important;
+	margin:-2px 41px 20px 0;
+	font-family:verdana;
+	font-size:10px;
+	width:200px;
+	padding:10px 5px;
+
+}
+.encadrementDocumentsJoints{
+	border:10px solid #e9e9e9;
+	margin: 0 !important;
+	margin: -2px 0px 0px 0;
+	font-family:verdana;
+	font-size:10px;
+	padding:5px;
+	display:block;
+	position:relative;
+}
+.encadrementDocumentsJoints ol{margin:0;padding:0;}
+.encadrementDocumentsJoints ol li{
+	list-style:none outside none;
+	margin:5px;	
+}
+.encadrementDocumentsJoints ol li a{padding-left:0;}
+.encadrementGrisColDroite
+{
+	border:5px solid #e9e9e9;
+	margin-right: 0px;
+	margin-bottom: 30px;
+	margin-top: 0px;
+	margin-left: 0px;
+	font-family:verdana;
+	font-size:10px;
+
+}
+
+#quoiDeNeuf
+{
+
+display:inline;
+}
+#whatsNew .fondviolet
+{
+cursor:pointer;
+background-color:#581D74;
+width:20px;
+height: 115px;
+}
+
+#whatsNew .nouveaute
+{
+padding:5px;
+vertical-align: top;
+}
+#whatsNew a
+{
+padding-left:4px;
+margin-bottom:10px;
+}
+
+#whatsNew .date
+{
+	font-family: verdana;
+	font-weight: bold;
+	font-size: 10px;
+	color:#A57DC6;
+	display:block;
+	text-transform: capitalize;
+}
+
+#whatsNew .contenuCarousel{
+	vertical-align: top;
+}
+
+.ligne
+{
+display:block;
+margin-bottom:20px;
+}
+.ligne td
+{
+
+}
+#colonneGauche
+{
+
+}
+
+#colonneDroite
+{
+vertical-align:top;
+width:203px;
+}
+
+.footerTransversalViolet
+{
+	width:100%;
+	background-color:#581D74;
+	text-align:center;
+	color:#FFFFFF;
+	height:29px;
+}
+.footerMenuGris
+{
+	width:100%;
+	background-color:#e9e9e9;
+	text-align:center;
+	display:block;
+overflow:hidden;
+height:162px;
+}
+
+#footerViolet
+{
+	width:1000px;
+	overflow:visible;
+	margin:0 auto;
+	text-align:left;
+display:block;
+color:#FFFFFF;
+font-family:verdana;
+font-size:10px;
+}
+
+#footer ul li.niv1
+{
+	float:left;
+	width:80px;
+	color:#581D74;
+	font-family:verdana;
+	font-size:10px;
+	font-weight:bold;
+	position: relative;
+	left:-35px;
+}
+#footer ul li.niv1 ul li.niv2
+{
+	
+	color:#581D74;
+	font-family:verdana;
+	font-size:10px;
+	font-weight:bold;
+	float:left;
+	position: relative;
+	left:-35px;
+}
+
+#footer ul
+{
+list-style:none outside none;
+
+}
+
+#footer ul li ul
+{
+	margin-top: 5px;
+	list-style:none outside none;
+}
+#footer ul li.niv1 ul li.niv2 a
+{
+	font-weight:normal;
+	font-style:normal;
+	text-decoration:none;
+}
+
+#footer ul li.niv1 a
+{
+	text-decoration:none;
+}
+
+#footerRight
+{
+	text-align:right;
+	font-family:verdana;
+	font-size:10px;
+}
+
+#footerRight a
+{
+
+color:#FFFFFF;
+}
+.tableFooter
+{
+width:100%;
+}
+
+.blocCentral{
+/*position:relative;*/
+}
+
+.blocRight{
+	width:193px;
+	overflow:hidden;
+	height:100%;
+	padding-left:10px;padding-top:20px;
+	background:url('../img/separateur.gif') repeat-y scroll 0 0 transparent;
+}
+.blocLeft {
+	background:url("../img/separateurLeft.gif") repeat-y scroll right 0 transparent;
+	height:100%;padding-right:10px;padding-top:20px;
+}
+
+
+/* -------------------------------------------------------------------- */
+/* ||||||||||||||||||||||||||||  OUTILS SECONDAIRES CONTENU  |||||||||||||||||||||||||||||| */
+/* -------------------------------------------------------------------- */
+
+.contourBarreTitreCategory {
+	background-color:#E9E9E9;
+	padding:7px;
+	border:1px solid #D1D1D1; 
+	margin: 5px 0 15px 0;
+	}
+
+.barreTitreCategory {
+	background-color: #581D74;
+	width: 100%;
+	height: 38px;
+	}
+
+.titleCategory {
+	background:#581D74 url(../img/titleCategory.png) no-repeat scroll left top;
+	color:#FFFFFF;
+	font-size:14px;
+	font-weight:bold;
+	height:28px;
+	padding: 10px 0 0 45px;
+	margin: 0px;
+	text-transform: uppercase;
+	float: left;
+}
+
+.titleContent,
+.article h2.titleContent {
+	background:url("../img/trameViolette.gif") no-repeat scroll 0 50% transparent;
+	color:#581D74;
+	font-size:12px;
+	font-weight:bold;
+	margin:0 0 10px;
+	padding:8px 5px 5px 45px !important;
+	}
+	
+ul#outils_secondaires {
+	overflow:auto;
+	list-style-type:none;
+	float: right;
+	background-color: #581D74;
+	margin: 0 5px 0 0;
+	}
+	
+ul#outils_secondaires li {
+	margin: 3px;
+	float:left;
+	}	
+	
+ul#outils_secondaires li.policeInf a, ul#outils_secondaires li.policeInf a:link {
+	background:url("../img/policeInf.png") no-repeat scroll left center #581D74;
+	}
+ul#outils_secondaires li.policeSup a, ul#outils_secondaires li.policeSup a:link {
+	background:url("../img/policeSup.png") no-repeat scroll left center #581D74;
+	}
+ul#outils_secondaires li.impression a, ul#outils_secondaires li.impression a:link {
+	background:url("../img/impression.png") no-repeat scroll left center #581D74;
+	}
+ul#outils_secondaires li.mail a, ul#outils_secondaires li.mail a:link {
+	background:url("../img/mail.png") no-repeat scroll left center #581D74;
+	}
+
+ul#outils_secondaires li a {
+	display:block;
+	height:30px;
+	width: 27px;
+	border:1px solid #FFFFFF;
+	padding-right: 3px;
+	}
+
+ul#outils_secondaires a, ul#outils_secondaires a:visited {
+	text-decoration:none;
+	font-size:0.9em;
+	line-height:1.6em;
+	}
+	
+ul#outils_secondaires li a span {
+	left:-9999px;
+	position:absolute;
+	}
+	
+.separateurV{height: 100%}
+.separateurV .top{background:url("../img/separateur-top.gif") no-repeat scroll 0 100% transparent;}
+.separateurV .mid{background:url("../img/separateur.gif") repeat-y scroll 0 0 transparent;height:auto;}
+.separateurV .bot{background:url("../img/separateur-bottom.gif") no-repeat scroll 0 0 transparent;}
+
+.ActualiteNatixis img.visuel169{display:block;border:10px solid #E9E9E9;margin-bottom:15px;}
+.ActualiteNatixis img.visuel43{float:left;margin-right:10px;border:10px solid #E9E9E9;margin-bottom:15px;}
+.ActualiteNatixis img.visuel{border:10px solid #E9E9E9;margin-bottom:15px;float:left;margin-right:10px;}
+.ActualiteNatixis .title{background:none;padding:0;}
+.ActualiteNatixis .date{display:block;padding-bottom:20px;}
+
+#fininfo a.linkTo{padding:0;}
+
+.loginfield{height:15px;border:1px inset #E9E9E9; color:#676767; font-family: Arial; font-size:12px; vertical-align: top; width:98%;}
